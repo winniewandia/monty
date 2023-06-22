@@ -56,8 +56,7 @@ void parseBytecode(int argc, char *argv[])
 	FILE *file;
 	char *line[2] = {NULL, NULL};
 	void (*f)(stack_t **stack, unsigned int line_number);
-	ssize_t bytesRead;
-	size_t lineLength = 256;
+	size_t lineLength = MAX_LINE_LENGTH;
 
 	if (argc == 1 || argc > 2)
 	{
@@ -71,8 +70,7 @@ void parseBytecode(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	start(file);
-	bytesRead = getline(&globals.line, &lineLength, file);
-	while (bytesRead != -1)
+	while (fgets(globals.line, MAX_LINE_LENGTH, file) != NULL)
 	{
 		line[0] = strtok(globals.line, " \t\n");
 		if (line[0][0] != '#' && line[0])
@@ -88,7 +86,6 @@ void parseBytecode(int argc, char *argv[])
 			globals.filename = strtok(NULL, " \t\n");
 			f(&globals.temp, globals.current_line);
 		}
-		bytesRead = getline(&globals.line, &lineLength, file);
 		globals.current_line++;
 	}
 	_free();
