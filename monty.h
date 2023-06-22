@@ -6,6 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/types.h>
+#include <stdarg.h>
 
 #define MAX_LINE_LENGTH 100
 
@@ -69,5 +70,6 @@ void _push(stack_t **head, unsigned int n);
 void _pall(stack_t **head, unsigned int n);
 stack_t *add_dnodeint(stack_t **head, const int n);
 stack_t *add_dnodeint_end(stack_t **head, const int n);
+void my_dprintf(int fd, const char *format, ...);
 
 #endif

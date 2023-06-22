@@ -11,8 +11,8 @@ void _push(stack_t **head, unsigned int n)
 
     if (!globals.filename)
     {
-        dprintf(2, "L%u: ", n);
-        dprintf(2, "usage: push integer\n");
+        my_dprintf(2, "L%u: ", n);
+        my_dprintf(2, "usage: push integer\n");
         _free();
         exit(EXIT_FAILURE);
     }
@@ -20,8 +20,8 @@ void _push(stack_t **head, unsigned int n)
     {
         if (!isdigit(globals.filename[i]) && globals.filename[i] != '-')
         {
-            dprintf(2, "L%u: ", n);
-            dprintf(2, "usage: push integer\n");
+            my_dprintf(2, "L%u: ", n);
+            my_dprintf(2, "usage: push integer\n");
             _free();
             exit(EXIT_FAILURE);
         }
@@ -52,4 +52,16 @@ void _pall(stack_t **head, unsigned int n)
         printf("%d\n", cp->n);
         cp = cp->next;
     }
+}
+/**
+ * my_dprintf - acts like my_dprintf
+ * @fd: No of bytes
+ * format: The format specifiers
+ */
+void my_dprintf(int fd, const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
 }
