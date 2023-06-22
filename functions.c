@@ -74,11 +74,14 @@ void my_dprintf(int __attribute__((unused)) fd, const char *format, ...)
  */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
+	size_t pos = 0;
+	int c;
+	char *new_ptr;
+
 	if (lineptr == NULL || n == NULL || stream == NULL)
 	{
 		return -1;
 	}
-
 	if (*lineptr == NULL || *n == 0)
 	{
 		*n = 128;
@@ -89,9 +92,6 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		}
 	}
 
-	size_t pos = 0;
-	int c;
-
 	while ((c = fgetc(stream)) != EOF)
 	{
 		(*lineptr)[pos++] = c;
@@ -99,7 +99,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		if (pos == *n)
 		{
 			*n *= 2;
-			char *new_ptr = (char *)realloc(*lineptr, *n);
+			new_ptr = (char *)realloc(*lineptr, *n);
 			if (new_ptr == NULL)
 			{
 				return -1;
