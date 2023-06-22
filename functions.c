@@ -41,8 +41,9 @@ void _push(stack_t **head, unsigned int n)
  */
 void _pall(stack_t **head, unsigned int n)
 {
-    (void)n;
     stack_t *cp;
+
+    (void)n;
 
     cp = *head;
 
