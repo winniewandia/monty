@@ -70,6 +70,6 @@ void _push(stack_t **head, unsigned int n);
 void _pall(stack_t **head, unsigned int n);
 stack_t *add_dnodeint(stack_t **head, const int n);
 stack_t *add_dnodeint_end(stack_t **head, const int n);
-void my_dprintf(int fd, const char *format, ...);
+void my_dprintf(int __attribute__((unused)) fd, const char *format, ...);
 
 #endif

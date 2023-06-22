@@ -58,7 +58,7 @@ void _pall(stack_t **head, unsigned int n)
  * @fd: No of bytes
  * format: The format specifiers
  */
-void my_dprintf(int fd, const char *format, ...)
+void my_dprintf(int __attribute__((unused)) fd, const char *format, ...)
 {
     va_list args;
     va_start(args, format);
