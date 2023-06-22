@@ -65,3 +65,52 @@ void my_dprintf(int __attribute__((unused)) fd, const char *format, ...)
 	vprintf(format, args);
 	va_end(args);
 }
+/**
+ * _getline - returns number of bytes read
+ * @n: Size of line
+ * @stream: Where the input is
+ *
+ * Return: Number of bytes read
+ */
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
+{
+	if (lineptr == NULL || n == NULL || stream == NULL)
+	{
+		return -1;
+	}
+
+	if (*lineptr == NULL || *n == 0)
+	{
+		*n = 128;
+		*lineptr = (char *)malloc(*n);
+		if (*lineptr == NULL)
+		{
+			return -1;
+		}
+	}
+
+	size_t pos = 0;
+	int c;
+
+	while ((c = fgetc(stream)) != EOF)
+	{
+		(*lineptr)[pos++] = c;
+
+		if (pos == *n)
+		{
+			*n *= 2;
+			char *new_ptr = (char *)realloc(*lineptr, *n);
+			if (new_ptr == NULL)
+			{
+				return -1;
+			}
+			*lineptr = new_ptr;
+		}
+		if (c == '\n')
+		{
+			break;
+		}
+	}
+	(*lineptr)[pos] = '\0';
+	return (pos > 0) ? (ssize_t)pos : -1;
+}
