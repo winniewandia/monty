@@ -56,7 +56,6 @@ void parseBytecode(int argc, char *argv[])
 	FILE *file;
 	char *line[2] = {NULL, NULL};
 	void (*f)(stack_t **stack, unsigned int line_number);
-	size_t lineLength = MAX_LINE_LENGTH;
 
 	if (argc == 1 || argc > 2)
 	{
