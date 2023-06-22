@@ -102,6 +102,6 @@ void parseBytecode(int argc, char *argv[])
  */
 int main(int argc, char *argv[])
 {
-	parseBytecode(argc, argv[1]);
+	parseBytecode(argc, argv);
 	return (0);
 }
