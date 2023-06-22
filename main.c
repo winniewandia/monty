@@ -85,6 +85,7 @@ void parseBytecode(int argc, char *argv[])
 			globals.filename = strtok(NULL, " \t\n");
 			f(&globals.temp, globals.current_line);
 		}
+		fgets(globals.line, MAX_LINE_LENGTH, file);
 		globals.current_line++;
 	}
 	_free();
