@@ -1,5 +1,4 @@
 #include "monty.h"
-#include <stdio.h>
 
 gl_t globals;
 /**

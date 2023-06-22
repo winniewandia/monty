@@ -7,31 +7,31 @@
  */
 void _push(stack_t **head, unsigned int n)
 {
-    int i, arg;
+	int i, arg;
 
-    if (!globals.filename)
-    {
-        my_dprintf(2, "L%u: ", n);
-        my_dprintf(2, "usage: push integer\n");
-        _free();
-        exit(EXIT_FAILURE);
-    }
-    for (i = 0; globals.filename[i]; i++)
-    {
-        if (!isdigit(globals.filename[i]) && globals.filename[i] != '-')
-        {
-            my_dprintf(2, "L%u: ", n);
-            my_dprintf(2, "usage: push integer\n");
-            _free();
-            exit(EXIT_FAILURE);
-        }
-    }
-    arg = atoi(globals.filename);
+	if (!globals.filename)
+	{
+		my_dprintf(2, "L%u: ", n);
+		my_dprintf(2, "usage: push integer\n");
+		_free();
+		exit(EXIT_FAILURE);
+	}
+	for (i = 0; globals.filename[i]; i++)
+	{
+		if (!isdigit(globals.filename[i]) && globals.filename[i] != '-')
+		{
+			my_dprintf(2, "L%u: ", n);
+			my_dprintf(2, "usage: push integer\n");
+			_free();
+			exit(EXIT_FAILURE);
+		}
+	}
+	arg = atoi(globals.filename);
 
-    if (globals.stack == 1)
-        add_dnodeint(head, arg);
-    else
-        add_dnodeint_end(head, arg);
+	if (globals.stack == 1)
+		add_dnodeint(head, arg);
+	else
+		add_dnodeint_end(head, arg);
 }
 
 /**
@@ -41,17 +41,17 @@ void _push(stack_t **head, unsigned int n)
  */
 void _pall(stack_t **head, unsigned int n)
 {
-    stack_t *cp;
+	stack_t *cp;
 
-    (void)n;
+	(void)n;
 
-    cp = *head;
+	cp = *head;
 
-    while (cp != NULL)
-    {
-        printf("%d\n", cp->n);
-        cp = cp->next;
-    }
+	while (cp != NULL)
+	{
+		printf("%d\n", cp->n);
+		cp = cp->next;
+	}
 }
 /**
  * my_dprintf - acts like my_dprintf
@@ -60,8 +60,8 @@ void _pall(stack_t **head, unsigned int n)
  */
 void my_dprintf(int __attribute__((unused)) fd, const char *format, ...)
 {
-    va_list args;
-    va_start(args, format);
-    vprintf(format, args);
-    va_end(args);
+	va_list args;
+	va_start(args, format);
+	vprintf(format, args);
+	va_end(args);
 }
