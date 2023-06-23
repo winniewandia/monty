@@ -46,7 +46,7 @@ void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number)
 
 	for (i = 0; code[i].opcode; i++)
 	{
-		if (_strcmp(code[i].opcode, ops) == 0)
+		if (strcmp(code[i].opcode, ops) == 0)
 			break;
 	}
 	return (code[i].f);
