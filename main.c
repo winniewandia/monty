@@ -72,13 +72,13 @@ void parseBytecode(int argc, char *argv[])
 
 	if (argc == 1 || argc > 2)
 	{
-		my_dprintf(2, "USAGE: monty file\n\n");
+		my_dprintf(2, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 	file = fopen(argv[1], "r");
 	if (file == NULL)
 	{
-		my_dprintf(2, "Error: Can't open file %s\n\n", argv[1]);
+		my_dprintf(2, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 	start(file);

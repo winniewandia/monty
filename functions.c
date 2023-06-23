@@ -11,8 +11,7 @@ void _push(stack_t **head, unsigned int n)
 
 	if (!globals.argument)
 	{
-		my_dprintf(2, "L%u: ", n);
-		my_dprintf(2, "usage: push integer\n");
+		fprintf(stderr, "L%u: usage: push integer\n", n);
 		_free();
 		exit(EXIT_FAILURE);
 	}
@@ -20,8 +19,7 @@ void _push(stack_t **head, unsigned int n)
 	{
 		if (!isdigit(globals.argument[i]) && globals.argument[i] != '-')
 		{
-			my_dprintf(2, "L%u: ", n);
-			my_dprintf(2, "usage: push integer\n");
+			fprintf(stderr, "L%u: usage: push integer\n", n);
 			_free();
 			exit(EXIT_FAILURE);
 		}
