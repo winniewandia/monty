@@ -72,13 +72,13 @@ void parseBytecode(int argc, char *argv[])
 
 	if (argc == 1 || argc > 2)
 	{
-		my_dprintf(2, "USAGE: monty file\n");
+		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 	file = fopen(argv[1], "r");
 	if (file == NULL)
 	{
-		my_dprintf(2, "Error: Can't open file %s\n", argv[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 	start(file);
@@ -91,8 +91,8 @@ void parseBytecode(int argc, char *argv[])
 			f = opcodes(line[0]);
 			if (f == NULL)
 			{
-				my_dprintf(2, "L%u: ", globals.current_line);
-				my_dprintf(2, "unknown instruction %s\n", line[0]);
+				fprintf(stderr, "L%u: unknown instruction %s\n",
+					globals.current_line, line[0]);
 				_free();
 				exit(EXIT_FAILURE);
 			}

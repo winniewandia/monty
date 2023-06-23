@@ -13,7 +13,7 @@ void _pop(stack_t **head, unsigned int n)
 
 	if (head == NULL || *head == NULL)
 	{
-		my_dprintf(2, "L%u: can't pop an empty stack\n", n);
+		fprintf(stderr, "L%u: can't pop an empty stack\n", n);
 		_free();
 		exit(EXIT_FAILURE);
 	}
@@ -41,7 +41,7 @@ void _swap(stack_t **head, unsigned int n)
 
 	if (i < 2)
 	{
-		my_dprintf(2, "L%u: can't swap, stack too short\n", n);
+		fprintf(stderr, "L%u: can't swap, stack too short\n", n);
 		_free();
 		exit(EXIT_FAILURE);
 	}
@@ -72,7 +72,7 @@ void _add(stack_t **head, unsigned int n)
 
 	if (i < 2)
 	{
-		my_dprintf(2, "L%u: can't add, stack too short\n", n);
+		fprintf(stderr, "L%u: can't add, stack too short\n", n);
 		_free();
 		exit(EXIT_FAILURE);
 	}

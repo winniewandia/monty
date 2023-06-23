@@ -47,23 +47,9 @@ void _pall(stack_t **head, unsigned int n)
 
 	while (cp != NULL)
 	{
-		printf("%d\n", cp->n);
+		fprintf(stdout, "%d\n", cp->n);
 		cp = cp->next;
 	}
-}
-
-/**
- * my_dprintf - acts like my_dprintf
- * @fd: No of bytes
- * @format: The format specifiers
- */
-void my_dprintf(int __attribute__((unused)) fd, const char *format, ...)
-{
-	va_list args;
-
-	va_start(args, format);
-	vprintf(format, args);
-	va_end(args);
 }
 
 /**
@@ -130,11 +116,10 @@ void _pint(stack_t **head, unsigned int n)
 
 	if (*head == NULL)
 	{
-		my_dprintf(2, "L%u: ", n);
-		my_dprintf(2, "can't pint, stack empty\n");
+		fprintf(stderr, "L%u: can't pint, stack empty\n", n);
 		_free();
 		exit(EXIT_FAILURE);
 	}
 
-	printf("%d\n", (*head)->n);
+	fprintf(stdout, "%d\n", (*head)->n);
 }
