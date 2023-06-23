@@ -76,7 +76,7 @@ void parseBytecode(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	start(file);
-	bytesRead = getline(&globals.line, &lineLength, file);
+	bytesRead = _getline(&globals.line, &lineLength, file);
 	while (bytesRead != -1)
 	{
 		line[0] = strtok(globals.line, " \t\n");
@@ -93,7 +93,7 @@ void parseBytecode(int argc, char *argv[])
 			globals.argument = strtok(NULL, " \t\n");
 			f(&globals.temp, globals.current_line);
 		}
-		bytesRead = getline(&globals.line, &lineLength, file);
+		bytesRead = _getline(&globals.line, &lineLength, file);
 		globals.current_line++;
 	}
 	_free();
