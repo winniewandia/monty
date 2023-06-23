@@ -52,3 +52,32 @@ void _swap(stack_t **head, unsigned int n)
 	(*head)->next = temp;
 	(*head)->prev = NULL;
 }
+
+/**
+ * _add - adds the top two elements of the stack
+ * @head: Pointer to the head
+ * @n: line number;
+ */
+void _add(stack_t **head, unsigned int n)
+{
+	stack_t *temp = NULL;
+	int i = 0;
+
+	temp = *head;
+	while (temp != NULL)
+	{
+		temp = temp->next;
+		i++;
+	}
+
+	if (i < 2)
+	{
+		my_dprintf(2, "L%u: can't add, stack too short\n", n);
+		_free();
+		exit(EXIT_FAILURE);
+	}
+
+	temp = (*head)->next;
+	temp->n += (*head)->n;
+	_pop(head, n);
+}
