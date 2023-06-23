@@ -29,9 +29,9 @@ void _push(stack_t **head, unsigned int n)
 	arg = atoi(globals.argument);
 
 	if (globals.stack == 1)
-		add_dnodeint_end(head, arg);
-	else
 		add_dnodeint(head, arg);
+	else
+		add_dnodeint_end(head, arg);
 }
 
 /**

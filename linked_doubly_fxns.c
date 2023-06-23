@@ -25,31 +25,30 @@ void free_dlistint(stack_t *head)
  */
 stack_t *add_dnodeint(stack_t **head, const int n)
 {
-	stack_t *temp, *current;
+	stack_t *current;
 
 	if (head == NULL)
 		return (NULL);
-	temp = malloc(sizeof(stack_t));
-	if (temp == NULL)
+	current = malloc(sizeof(stack_t));
+	if (current == NULL)
 	{
 		my_dprintf(2, "Error: malloc failed\n");
 		_free();
 		exit(EXIT_FAILURE);
 	}
-	temp->n = n;
-	current = *head;
-	if (current == NULL)
+	current->n = n;
+	if (*head == NULL)
 	{
-		temp->next = *head;
-		temp->prev = NULL;
-		*head = temp;
+		current->next = *head;
+		current->prev = NULL;
+		*head = current;
 		return (*head);
 	}
-	current->prev = temp;
-	temp->next = current;
-	temp->prev = NULL;
-	current = temp;
-	return (current);
+	(*head)->prev = current;
+	current->next = (*head);
+	current->prev = NULL;
+	*head = current;
+	return (*head);
 }
 /**
  * add_dnodeint_end - adds a new node at the end of a dlistint_t list
