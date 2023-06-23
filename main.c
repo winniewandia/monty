@@ -54,7 +54,7 @@ void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number)
 void parseBytecode(int argc, char *argv[])
 {
 	FILE *file;
-	char *line;
+	char *line[2];
 	void (*f)(stack_t **stack, unsigned int line_number);
 	ssize_t bytesRead = 0;
 	size_t lineLength = 256;
@@ -71,28 +71,25 @@ void parseBytecode(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	start(file);
-	while ((bytesRead = _getline(&globals.line, &lineLength, file)) != -1)
+	bytesRead = _getline(&globals.line, &lineLength, file);
+	while (bytesRead != -1)
 	{
-		line = strtok(globals.line, " \t\n");
-		if (line && line[0] != '#')
+		line[0] = strtok(globals.line, " \t\n");
+		if (line[0] && line[0][0] != '#')
 		{
-			f = opcodes(line);
+			f = opcodes(line[0]);
 			if (f == NULL)
 			{
 				my_dprintf(2, "L%u: ", globals.current_line);
-				my_dprintf(2, "unknown instruction %s\n", line);
+				my_dprintf(2, "unknown instruction %s\n", line[0]);
 				_free();
 				exit(EXIT_FAILURE);
 			}
 			globals.argument = strtok(NULL, " \t\n");
 			f(&globals.temp, globals.current_line);
-			globals.current_line++;
 		}
-		else
-		{
-			globals.current_line++;
-			continue;
-		}
+		bytesRead = _getline(&globals.line, &lineLength, file);
+		globals.current_line++;
 	}
 	_free();
 }
