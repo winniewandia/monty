@@ -74,7 +74,7 @@ void parseBytecode(int argc, char *argv[])
 	while ((bytesRead = _getline(&globals.line, &lineLength, file)) != -1)
 	{
 		line = strtok(globals.line, " \t\n");
-		if (line[0] != '#' && line)
+		if (line && line[0] != '#')
 		{
 			f = opcodes(line);
 			if (f == NULL)
