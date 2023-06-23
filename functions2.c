@@ -41,7 +41,7 @@ void _swap(stack_t **head, unsigned int n)
 
 	if (i < 2)
 	{
-		dprintf(2, "L%u: can't swap, stack too short\n", n);
+		my_dprintf(2, "L%u: can't swap, stack too short\n", n);
 		_free();
 		exit(EXIT_FAILURE);
 	}
