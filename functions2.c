@@ -92,3 +92,33 @@ void _nop(stack_t **head, unsigned int n)
 	(void)head;
 	(void)n;
 }
+
+/**
+ * _sub - subtracts the top element of the stack from the second
+ * top element of the stack
+ * @head: Pointer to the head
+ * @n: The line number;
+ */
+void _sub(stack_t **head, unsigned int n)
+{
+	stack_t *temp = NULL;
+	int i = 0;
+
+	temp = *head;
+
+	while (temp != NULL)
+	{
+		temp = temp->next;
+		i++;
+	}
+	if (i < 2)
+	{
+		fprintf(stderr, "L%u: can't sub, stack too short\n", n);
+		_free();
+		exit(EXIT_FAILURE);
+	}
+
+	temp = (*head)->next;
+	temp->n -= (*head)->n;
+	_pop(head, n);
+}
