@@ -119,3 +119,24 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	(*lineptr)[bytesRead] = '\0';
 	return (bytesRead);
 }
+
+/**
+ * _pint - prints the value at the top of the stack
+ *
+ * @head: Pointer to the linked list
+ * @n: Line number
+ */
+void _pint(stack_t **head, unsigned int n)
+{
+	(void)n;
+
+	if (*head == NULL)
+	{
+		my_dprintf(2, "L%u: ", n);
+		my_dprintf(2, "can't pint, stack empty\n");
+		_free();
+		exit(EXIT_FAILURE);
+	}
+
+	printf("%d\n", (*head)->n);
+}

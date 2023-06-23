@@ -40,12 +40,14 @@ void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number)
 	instruction_t code[] = {
 	    {"push", _push},
 	    {"pall", _pall},
+	    {"pint", _pint},
 	    {NULL, NULL}};
-	int i = 0;
+	int i;
 
-	while (strcmp(code[i].opcode, ops) != 0 && code[i].f != NULL)
+	for (i = 0; code[i].opcode; i++)
 	{
-		i++;
+		if (_strcmp(code[i].opcode, ops) == 0)
+			break;
 	}
 	return (code[i].f);
 }

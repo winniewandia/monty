@@ -75,4 +75,5 @@ stack_t *add_dnodeint_end(stack_t **head, const int n);
 void my_dprintf(int __attribute__((unused)) fd, const char *format, ...);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 void *_realloc(void *ptr, size_t size);
+void _pint(stack_t **head, unsigned int n);
 #endif
