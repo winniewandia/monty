@@ -81,5 +81,6 @@ void _add(stack_t **head, unsigned int n);
 void _nop(stack_t **head, unsigned int n);
 void _sub(stack_t **head, unsigned int n);
 void _div(stack_t **head, unsigned int n);
+void _mul(stack_t **head, unsigned int n);
 
 #endif
