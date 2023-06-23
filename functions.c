@@ -67,6 +67,7 @@ void my_dprintf(int __attribute__((unused)) fd, const char *format, ...)
 }
 /**
  * _getline - returns number of bytes read
+ * @lineptr: Line read
  * @n: Size of line
  * @stream: Where the input is
  *
@@ -76,12 +77,12 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	ssize_t bytesRead;
 	size_t bufferSize = 0;
-	char *buffer = NULL, *newBuffer;
+	char *newBuffer;
 	int c;
 
 	if (lineptr == NULL || n == NULL || stream == NULL)
 	{
-		return -1;
+		return (-1);
 	}
 	if (*lineptr == NULL || *n == 0)
 	{
@@ -89,7 +90,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		*lineptr = (char *)malloc(bufferSize);
 		if (*lineptr == NULL)
 		{
-			return -1;
+			return (-1);
 		}
 		*n = bufferSize;
 	}
@@ -102,13 +103,15 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 			break;
 		}
 
-		if (bytesRead >= *n - 1)
+		if (bytesRead >= (ssize_t)(*n) - 1)
 		{
 			bufferSize *= 2;
 			newBuffer = (char *)realloc(*lineptr, bufferSize);
 			if (newBuffer == NULL)
 			{
-				return -1;
+				free(*lineptr);
+				*lineptr = NULL;
+				return (-1);
 			}
 			*lineptr = newBuffer;
 			*n = bufferSize;
@@ -117,12 +120,13 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		(*lineptr)[bytesRead] = (char)c;
 		bytesRead++;
 	}
+
 	if (bytesRead == 0 && c == EOF)
 	{
-		return (-1);
+		return (-1); // Reached EOF without reading any characters
 	}
 
-	(*lineptr)[bytesRead] = '\0';
+	(*lineptr)[bytesRead] = '\0'; // Add null-terminator
 
 	return (bytesRead);
 }
@@ -134,13 +138,15 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
  */
 void *_realloc(void *ptr, size_t old_size, size_t new_size)
 {
+	void *new_ptr;
+
 	if (new_size == 0)
 	{
 		free(ptr);
 		return (NULL);
 	}
 
-	void *new_ptr = malloc(new_size);
+	new_ptr = malloc(new_size);
 	if (new_ptr == NULL)
 	{
 		return (NULL);

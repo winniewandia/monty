@@ -67,7 +67,7 @@ void free_dlistint(stack_t *head);
 void _free(void);
 void start(FILE *file);
 void parseBytecode(int argc, char *argv[]);
-void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number);
+void (*opcodes(char ops))(stack_t **stack, unsigned int line_number);
 void _push(stack_t **head, unsigned int n);
 void _pall(stack_t **head, unsigned int n);
 stack_t *add_dnodeint(stack_t **head, const int n);

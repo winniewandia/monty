@@ -29,7 +29,7 @@ void start(FILE *file)
  *
  * Return: Pointer to the function to be done
  */
-void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number)
+void (*opcodes(char ops))(stack_t **stack, unsigned int line_number)
 {
 	instruction_t code[] = {
 	    {"push", _push},
@@ -71,25 +71,27 @@ void parseBytecode(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	start(file);
-	while (bytesRead = _getline(&globals.line, &lineLength, file) != -1)
+	while ((bytesRead = _getline(&globals.line, &lineLength, file)) != -1)
 	{
 		line = strtok(globals.line, " \t\n");
 		if (line[0] != '#' && line)
 		{
-			f = opcodes(line[0]);
+			f = opcodes(line);
 			if (f == NULL)
 			{
 				my_dprintf(2, "L%u: ", globals.current_line);
-				my_dprintf(2, "unknown instruction %s\n", line[0]);
+				my_dprintf(2, "unknown instruction %s\n", line);
 				_free();
 				exit(EXIT_FAILURE);
 			}
 			globals.argument = strtok(NULL, " \t\n");
 			f(&globals.temp, globals.current_line);
+			globals.current_line++;
 		}
 		else
 		{
 			globals.current_line++;
+			continue;
 		}
 	}
 	_free();
