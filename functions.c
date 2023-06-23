@@ -9,16 +9,16 @@ void _push(stack_t **head, unsigned int n)
 {
 	int i, arg;
 
-	if (!globals.filename)
+	if (!globals.argument)
 	{
 		my_dprintf(2, "L%u: ", n);
 		my_dprintf(2, "usage: push integer\n");
 		_free();
 		exit(EXIT_FAILURE);
 	}
-	for (i = 0; globals.filename[i] != '\0'; i++)
+	for (i = 0; globals.argument[i] != '\0'; i++)
 	{
-		if (!isdigit(globals.filename[i]) && globals.filename[i] != '-')
+		if (!isdigit(globals.argument[i]) && globals.argument[i] != '-')
 		{
 			my_dprintf(2, "L%u: ", n);
 			my_dprintf(2, "usage: push integer\n");
@@ -26,7 +26,7 @@ void _push(stack_t **head, unsigned int n)
 			exit(EXIT_FAILURE);
 		}
 	}
-	arg = atoi(globals.filename);
+	arg = atoi(globals.argument);
 
 	if (globals.stack == 1)
 		add_dnodeint(head, arg);
@@ -74,9 +74,10 @@ void my_dprintf(int __attribute__((unused)) fd, const char *format, ...)
  */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	size_t pos = 0;
+	ssize_t bytesRead;
+	size_t bufferSize = 0;
+	char *buffer = NULL, *newBuffer;
 	int c;
-	char *new_ptr;
 
 	if (lineptr == NULL || n == NULL || stream == NULL)
 	{
@@ -84,33 +85,78 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	}
 	if (*lineptr == NULL || *n == 0)
 	{
-		*n = 128;
-		*lineptr = (char *)malloc(*n);
+		bufferSize = 128;
+		*lineptr = (char *)malloc(bufferSize);
 		if (*lineptr == NULL)
 		{
 			return -1;
 		}
+		*n = bufferSize;
 	}
-
-	while ((c = fgetc(stream)) != EOF)
+	bytesRead = 0;
+	while (1)
 	{
-		(*lineptr)[pos++] = c;
-
-		if (pos == *n)
-		{
-			*n *= 2;
-			new_ptr = (char *)realloc(*lineptr, *n);
-			if (new_ptr == NULL)
-			{
-				return -1;
-			}
-			*lineptr = new_ptr;
-		}
-		if (c == '\n')
+		c = fgetc(stream);
+		if (c == EOF || c == '\n')
 		{
 			break;
 		}
+
+		if (bytesRead >= *n - 1)
+		{
+			bufferSize *= 2;
+			newBuffer = (char *)realloc(*lineptr, bufferSize);
+			if (newBuffer == NULL)
+			{
+				return -1;
+			}
+			*lineptr = newBuffer;
+			*n = bufferSize;
+		}
+
+		(*lineptr)[bytesRead] = (char)c;
+		bytesRead++;
 	}
-	(*lineptr)[pos] = '\0';
-	return (pos > 0) ? (ssize_t)pos : -1;
+	if (bytesRead == 0 && c == EOF)
+	{
+		return (-1);
+	}
+
+	(*lineptr)[bytesRead] = '\0';
+
+	return (bytesRead);
+}
+/**
+ * _realloc - reallocates memory
+ * @ptr: Pointer to the orig size
+ * @old_size: Old size of the block
+ * @new_size: The new allocated size
+ */
+void *_realloc(void *ptr, size_t old_size, size_t new_size)
+{
+	if (new_size == 0)
+	{
+		free(ptr);
+		return (NULL);
+	}
+
+	void *new_ptr = malloc(new_size);
+	if (new_ptr == NULL)
+	{
+		return (NULL);
+	}
+
+	if (ptr != NULL)
+	{
+		size_t min_size = (old_size < new_size) ? old_size : new_size;
+
+		for (size_t i = 0; i < min_size; i++)
+		{
+			((char *)new_ptr)[i] = ((char *)ptr)[i];
+		}
+
+		free(ptr);
+	}
+
+	return (new_ptr);
 }

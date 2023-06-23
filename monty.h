@@ -46,7 +46,7 @@ typedef struct instruction_s
  * struct global_var - global values to be used
  * @stack: Stack or queue
  * @current_line: The current line
- * @filename: Filename containing the bytecode
+ * @argument: argument containing the bytecode
  * @temp: Doubly linked list
  * @file: File descriptor
  * @line: input text
@@ -55,7 +55,7 @@ typedef struct global_var
 {
 	int stack;
 	unsigned int current_line;
-	char *filename;
+	char *argument;
 	stack_t *temp;
 	FILE *file;
 	char *line;
@@ -74,5 +74,6 @@ stack_t *add_dnodeint(stack_t **head, const int n);
 stack_t *add_dnodeint_end(stack_t **head, const int n);
 void my_dprintf(int __attribute__((unused)) fd, const char *format, ...);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+void *_realloc(void *ptr, size_t old_size, size_t new_size);
 
 #endif

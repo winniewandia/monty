@@ -18,7 +18,7 @@ void start(FILE *file)
 {
 	globals.stack = 1;
 	globals.current_line = 1;
-	globals.filename = NULL;
+	globals.argument = NULL;
 	globals.temp = NULL;
 	globals.file = file;
 	globals.line = NULL;
@@ -54,9 +54,9 @@ void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number)
 void parseBytecode(int argc, char *argv[])
 {
 	FILE *file;
-	char *line[2] = {NULL, NULL};
+	char *line;
 	void (*f)(stack_t **stack, unsigned int line_number);
-	ssize_t bytesRead;
+	ssize_t bytesRead = 0;
 	size_t lineLength = 256;
 
 	if (argc == 1 || argc > 2)
@@ -71,11 +71,10 @@ void parseBytecode(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	start(file);
-	bytesRead = _getline(&globals.line, &lineLength, file);
-	while (bytesRead != -1)
+	while (bytesRead = _getline(&globals.line, &lineLength, file) != -1)
 	{
-		line[0] = strtok(globals.line, " \t\n");
-		if (line[0][0] != '#' && line[0])
+		line = strtok(globals.line, " \t\n");
+		if (line[0] != '#' && line)
 		{
 			f = opcodes(line[0]);
 			if (f == NULL)
@@ -85,11 +84,13 @@ void parseBytecode(int argc, char *argv[])
 				_free();
 				exit(EXIT_FAILURE);
 			}
-			globals.filename = strtok(NULL, " \t\n");
+			globals.argument = strtok(NULL, " \t\n");
 			f(&globals.temp, globals.current_line);
 		}
-		bytesRead = _getline(&globals.line, &lineLength, file);
-		globals.current_line++;
+		else
+		{
+			globals.current_line++;
+		}
 	}
 	_free();
 }
