@@ -150,7 +150,7 @@ void *_realloc(void *ptr, size_t size)
 		return (NULL);
 	}
 
-	old_size = malloc_usable_size(ptr);
+	old_size = malloc_size(ptr);
 	copy_size = (size < old_size) ? size : old_size;
 	memcpy(new_ptr, ptr, copy_size);
 
