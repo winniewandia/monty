@@ -8,8 +8,7 @@ void free_dlistint(stack_t *head)
 {
 	stack_t *current;
 
-	current = head;
-	while (current != NULL)
+	while ((current = head) != NULL)
 	{
 		head = head->next;
 		free(current);
