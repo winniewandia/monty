@@ -131,7 +131,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 void *_realloc(void *ptr, size_t size)
 {
 	void *new_ptr;
-	size_t copy_size;
+	size_t copy_size, old_size;
 
 	if (ptr == NULL)
 	{
@@ -150,7 +150,8 @@ void *_realloc(void *ptr, size_t size)
 		return (NULL);
 	}
 
-	copy_size = (size < malloc_usable_size(ptr)) ? size : malloc_usable_size(ptr);
+	old_size = malloc_usable_size(ptr);
+	copy_size = (size < old_size) ? size : old_size;
 	memcpy(new_ptr, ptr, copy_size);
 
 	free(ptr);
