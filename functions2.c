@@ -81,3 +81,14 @@ void _add(stack_t **head, unsigned int n)
 	temp->n += (*head)->n;
 	_pop(head, n);
 }
+
+/**
+ * _nop - doesn't do anything
+ * @head: Pointer to the head
+ * @n: line number;
+ */
+void _nop(stack_t **head, unsigned int n)
+{
+	(void)head;
+	(void)n;
+}

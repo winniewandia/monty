@@ -79,5 +79,6 @@ void _pint(stack_t **head, unsigned int n);
 void _pop(stack_t **head, unsigned int n);
 void _swap(stack_t **head, unsigned int n);
 void _add(stack_t **head, unsigned int n);
+void _nop(stack_t **head, unsigned int n);
 
 #endif
