@@ -16,7 +16,7 @@ void _push(stack_t **head, unsigned int n)
 		_free();
 		exit(EXIT_FAILURE);
 	}
-	for (i = 0; globals.filename[i]; i++)
+	for (i = 0; globals.filename[i] != '\0'; i++)
 	{
 		if (!isdigit(globals.filename[i]) && globals.filename[i] != '-')
 		{

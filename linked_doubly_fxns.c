@@ -27,22 +27,29 @@ stack_t *add_dnodeint(stack_t **head, const int n)
 {
 	stack_t *temp, *current;
 
+	if (head == NULL)
+		return (NULL);
 	temp = malloc(sizeof(stack_t));
 	if (temp == NULL)
-		return (NULL);
-	temp->n = n;
-	temp->prev = NULL;
-	current = *head;
-	if (current != NULL)
 	{
-		while (current->prev != NULL)
-			current = current->prev;
+		my_dprintf(2, "Error: malloc failed\n");
+		_free();
+		exit(EXIT_FAILURE);
 	}
+	temp->n = n;
+	current = *head;
+	if (current == NULL)
+	{
+		temp->next = *head;
+		temp->prev = NULL;
+		*head = temp;
+		return (*head);
+	}
+	current->prev = temp;
 	temp->next = current;
-	if (current != NULL)
-		current->prev = temp;
-	*head = temp;
-	return (temp);
+	temp->prev = NULL;
+	current = temp;
+	return (current);
 }
 /**
  * add_dnodeint_end - adds a new node at the end of a dlistint_t list
@@ -59,7 +66,11 @@ stack_t *add_dnodeint_end(stack_t **head, const int n)
 		return (NULL);
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
-		return (NULL);
+	{
+		my_dprintf(2, "Error: malloc failed\n");
+		_free();
+		exit(EXIT_FAILURE);
+	}
 	new->n = n;
 	new->next = NULL;
 	if (*head == NULL)
