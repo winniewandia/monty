@@ -41,14 +41,11 @@ void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number)
 	    {"push", _push},
 	    {"pall", _pall},
 	    {NULL, NULL}};
-	int i;
+	int i = 0;
 
-	for (i = 0; code[i].opcode; i++)
+	while (strcmp(code[i].opcode, ops) != 0 && code[i].f != NULL)
 	{
-		if (strcmp(code[i].opcode, ops) == 0)
-		{
-			break;
-		}
+		i++;
 	}
 	return (code[i].f);
 }
