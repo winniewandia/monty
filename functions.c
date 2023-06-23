@@ -123,10 +123,10 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 
 	if (bytesRead == 0 && c == EOF)
 	{
-		return (-1); // Reached EOF without reading any characters
+		return (-1);
 	}
 
-	(*lineptr)[bytesRead] = '\0'; // Add null-terminator
+	(*lineptr)[bytesRead] = '\0';
 
 	return (bytesRead);
 }
@@ -139,6 +139,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 void *_realloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void *new_ptr;
+	size_t i;
 
 	if (new_size == 0)
 	{
@@ -156,7 +157,7 @@ void *_realloc(void *ptr, size_t old_size, size_t new_size)
 	{
 		size_t min_size = (old_size < new_size) ? old_size : new_size;
 
-		for (size_t i = 0; i < min_size; i++)
+		for (i = 0; i < min_size; i++)
 		{
 			((char *)new_ptr)[i] = ((char *)ptr)[i];
 		}

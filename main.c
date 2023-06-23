@@ -29,7 +29,7 @@ void start(FILE *file)
  *
  * Return: Pointer to the function to be done
  */
-void (*opcodes(char ops))(stack_t **stack, unsigned int line_number)
+void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number)
 {
 	instruction_t code[] = {
 	    {"push", _push},
