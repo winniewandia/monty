@@ -21,3 +21,34 @@ void _pop(stack_t **head, unsigned int n)
 	*head = (*head)->next;
 	free(temp);
 }
+
+/**
+ * _swap - swaps the top two elements of the stack
+ * @head: Pointer to the head
+ * @n: The line number
+ */
+void _swap(stack_t **head, unsigned int n)
+{
+	int i = 0;
+	stack_t *temp = NULL;
+
+	temp = *head;
+	while (temp != NULL)
+	{
+		temp = temp->next;
+		i++;
+	}
+
+	if (i < 2)
+	{
+		dprintf(2, "L%u: can't swap, stack too short\n", n);
+		_free();
+		exit(EXIT_FAILURE);
+	}
+	temp = *head;
+	*head = (*head)->next;
+	temp->next = (*head)->next;
+	temp->prev = *head;
+	(*head)->next = temp;
+	(*head)->prev = NULL;
+}

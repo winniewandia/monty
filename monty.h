@@ -77,4 +77,5 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 void *_realloc(void *ptr, size_t size);
 void _pint(stack_t **head, unsigned int n);
 void _pop(stack_t **head, unsigned int n);
+void _swap(stack_t **head, unsigned int n);
 #endif
