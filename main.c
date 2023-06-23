@@ -1,19 +1,23 @@
 #include "monty.h"
 
 gl_t globals;
+
 /**
  * _free - frees the global variables
  */
+
 void _free(void)
 {
 	free_dlistint(globals.temp);
 	free(globals.line);
 	fclose(globals.file);
 }
+
 /**
  * start - Initializes the globals
  * @file: The file descriptor
  */
+
 void start(FILE *file)
 {
 	globals.stack = 1;
@@ -23,12 +27,14 @@ void start(FILE *file)
 	globals.file = file;
 	globals.line = NULL;
 }
+
 /**
  * opcodes - chooses the right instruction
  * @ops: Instruction to execute
  *
  * Return: Pointer to the function to be done
  */
+
 void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number)
 {
 	instruction_t code[] = {
@@ -46,11 +52,13 @@ void (*opcodes(char *ops))(stack_t **stack, unsigned int line_number)
 	}
 	return (code[i].f);
 }
+
 /**
  * parseBytecode - reads and interprets Monty bytecode files
  * @argc: Number of arguments
  * @argv: Pointer to the array of arguments
  */
+
 void parseBytecode(int argc, char *argv[])
 {
 	FILE *file;
@@ -93,6 +101,7 @@ void parseBytecode(int argc, char *argv[])
 	}
 	_free();
 }
+
 /**
  * main - Entry point
  * @argc: Number of arguments
@@ -100,6 +109,7 @@ void parseBytecode(int argc, char *argv[])
  *
  * Return: Always 1 if success 0 otherwise
  */
+
 int main(int argc, char *argv[])
 {
 	parseBytecode(argc, argv);

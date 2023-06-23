@@ -36,7 +36,7 @@ void _push(stack_t **head, unsigned int n)
 
 /**
  * _pall - displays all elements of stack
- * @stack: The stack to be displayed
+ * @head: The stack to be displayed
  * @n: Line number
  */
 void _pall(stack_t **head, unsigned int n)
@@ -53,18 +53,21 @@ void _pall(stack_t **head, unsigned int n)
 		cp = cp->next;
 	}
 }
+
 /**
  * my_dprintf - acts like my_dprintf
  * @fd: No of bytes
- * format: The format specifiers
+ * @format: The format specifiers
  */
 void my_dprintf(int __attribute__((unused)) fd, const char *format, ...)
 {
 	va_list args;
+
 	va_start(args, format);
 	vprintf(format, args);
 	va_end(args);
 }
+
 /**
  * _getline - returns number of bytes read
  * @lineptr: Line read
@@ -75,38 +78,30 @@ void my_dprintf(int __attribute__((unused)) fd, const char *format, ...)
  */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	ssize_t bytesRead;
+	ssize_t bytesRead = 0;
 	size_t bufferSize = 0;
 	char *newBuffer;
 	int c;
 
 	if (lineptr == NULL || n == NULL || stream == NULL)
-	{
 		return (-1);
-	}
 	if (*lineptr == NULL || *n == 0)
 	{
 		bufferSize = 128;
 		*lineptr = (char *)malloc(bufferSize);
 		if (*lineptr == NULL)
-		{
 			return (-1);
-		}
 		*n = bufferSize;
 	}
-	bytesRead = 0;
 	while (1)
 	{
 		c = fgetc(stream);
 		if (c == EOF || c == '\n')
-		{
 			break;
-		}
-
 		if (bytesRead >= (ssize_t)(*n) - 1)
 		{
 			bufferSize *= 2;
-			newBuffer = (char *)realloc(*lineptr, bufferSize);
+			newBuffer = (char *)_realloc(*lineptr, bufferSize);
 			if (newBuffer == NULL)
 			{
 				free(*lineptr);
@@ -116,54 +111,49 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 			*lineptr = newBuffer;
 			*n = bufferSize;
 		}
-
 		(*lineptr)[bytesRead] = (char)c;
 		bytesRead++;
 	}
-
 	if (bytesRead == 0 && c == EOF)
-	{
 		return (-1);
-	}
-
 	(*lineptr)[bytesRead] = '\0';
-
 	return (bytesRead);
 }
+
 /**
  * _realloc - reallocates memory
  * @ptr: Pointer to the orig size
- * @old_size: Old size of the block
- * @new_size: The new allocated size
+ * @size: Old size of the block
+ *
+ * Return: Void pointer to the new pointer
  */
-void *_realloc(void *ptr, size_t old_size, size_t new_size)
+
+void *_realloc(void *ptr, size_t size)
 {
 	void *new_ptr;
-	size_t i;
+	size_t copy_size;
 
-	if (new_size == 0)
+	if (ptr == NULL)
+	{
+		return (malloc(size));
+	}
+
+	if (size == 0)
 	{
 		free(ptr);
 		return (NULL);
 	}
 
-	new_ptr = malloc(new_size);
+	new_ptr = malloc(size);
 	if (new_ptr == NULL)
 	{
 		return (NULL);
 	}
 
-	if (ptr != NULL)
-	{
-		size_t min_size = (old_size < new_size) ? old_size : new_size;
+	copy_size = (size < malloc_usable_size(ptr)) ? size : malloc_usable_size(ptr);
+	memcpy(new_ptr, ptr, copy_size);
 
-		for (i = 0; i < min_size; i++)
-		{
-			((char *)new_ptr)[i] = ((char *)ptr)[i];
-		}
-
-		free(ptr);
-	}
+	free(ptr);
 
 	return (new_ptr);
 }
